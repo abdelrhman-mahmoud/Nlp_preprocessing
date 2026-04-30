@@ -1,0 +1,47 @@
+FROM python:3.10-slim
+
+# ==== Environment ====
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# ==== System dependencies ====
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# ==== Python dependencies ====
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# ==== Download CAMeL Tools models ====
+RUN camel_data -i light
+
+# ==== Download NLTK data ====
+RUN python -c "import nltk; \
+    [nltk.download(p, quiet=True) for p in [ \
+        'stopwords', 'wordnet', 'punkt', 'punkt_tab', \
+        'averaged_perceptron_tagger', \
+        'averaged_perceptron_tagger_eng', \
+        'omw-1.4' \
+    ]]"
+
+# ==== Application code ====
+COPY . .
+
+# ==== Create logs & models directories ====
+RUN mkdir -p logs models/english models/arabic
+
+# ==== Expose & run ====
+EXPOSE 5000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:5000/api/health || exit 1
+
+CMD ["python", "app.py"]
