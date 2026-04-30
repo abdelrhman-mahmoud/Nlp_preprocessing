@@ -56,6 +56,7 @@ A full-stack web application for preprocessing **English** and **Arabic** (MSA +
 ## 🏗️ Architecture
 
 \`\`\`
+
 nlp-preprocessing-app/
 ├── backend/              # Flask REST API
 │   ├── api/              # Routes + detectors
@@ -86,12 +87,14 @@ nlp-preprocessing-app/
 
 ### Option 1: Docker (Recommended)
 
-\`\`\`bash
 # Clone the repo
-git clone <your-repo-url>
-cd nlp-preprocessing-app
+\`\`\`bash
+git clone https://github.com/abdelrhman-mahmoud/Nlp_preprocessing
+
+cd Nlp_preprocessing
 
 # Build & run everything
+
 docker-compose up --build
 \`\`\`
 
