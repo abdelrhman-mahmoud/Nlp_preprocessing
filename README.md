@@ -1,111 +1,123 @@
-# 🧹 NLP Preprocessing Web App
+# NLP Preprocessing Web App
 
-A full-stack web application for preprocessing **English** and **Arabic** (MSA + Dialectal) text with customizable, composable pipelines.
+A full-stack web application for preprocessing **English** and **Arabic** (MSA + Dialectal) text through customizable, composable pipelines — built with Flask and React.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.10+-green.svg)
-![React](https://img.shields.io/badge/react-18.2-blue.svg)
-![Flask](https://img.shields.io/badge/flask-3.0-red.svg)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10+-green.svg)](https://python.org)
+[![React](https://img.shields.io/badge/react-18.2-blue.svg)](https://reactjs.org)
+[![Flask](https://img.shields.io/badge/flask-3.0-red.svg)](https://flask.palletsprojects.com)
 
 ---
 
-## ✨ Features
+## Table of Contents
 
-### 🌐 Multi-Language Support
-- **English** preprocessing pipeline
-- **Arabic** preprocessing pipeline (MSA + Dialectal)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+- [Tech Stack](#tech-stack)
+- [Testing](#testing)
+- [Arabic Dialect Support](#arabic-dialect-support)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Features
+
+### Multi-Language Support
+- English and Arabic (MSA + Dialectal) preprocessing pipelines
 - Auto language detection
-- Arabic dialect identification: **MSA, Egyptian, Gulf, Levantine, Maghrebi**
+- Arabic dialect identification: MSA, Egyptian, Gulf, Levantine, Maghrebi
 
-### 🔧 Composable Pipelines
-- Pick any combination of preprocessing functions
-- Drag & drop to reorder steps
+### Composable Pipelines
+- Mix and match any preprocessing functions in any combination
+- Drag and drop to reorder steps
 - Auto-ordering by best-practice sequence
-- Smart Run mode — one-click auto pipeline
+- **Smart Run** mode — one-click automatic pipeline
 
-### 🇬🇧 English Functions
-- HTML/URL/Emoji removal
-- Contraction expansion (`I'm` → `I am`)
-- Lowercase, digit, punctuation removal
-- Letter repetition normalization (`Helloooo` → `Hello`)
-- Spell correction
-- Stopword removal
-- Porter stemming
-- WordNet lemmatization
+### English Preprocessing Functions
+| Function | Description |
+|----------|-------------|
+| HTML / URL / Emoji removal | Strip web artifacts |
+| Contraction expansion | `I'm` → `I am` |
+| Lowercase | Normalize casing |
+| Digit & punctuation removal | Clean non-alphabetic characters |
+| Letter repetition normalization | `Helloooo` → `Hello` |
+| Spell correction | Fix common spelling errors |
+| Stopword removal | Remove high-frequency filler words |
+| Porter stemming | Suffix-stripping stemmer |
+| WordNet lemmatization | Dictionary-based lemmatizer |
 
-### 🇸🇦 Arabic Functions
-- Tashkeel (diacritics) removal
-- Tatweel (kashida) removal
-- Letter repetition normalization (`يدرسوووون` → `يدرسون`)
-- Basic + CAMeL Tools normalization
-- Stopword removal (custom + dialectal)
-- ISRI + Tashaphyne stemmers
-- Qalsadi lemmatizer
-- **CAMeL morphological lemmatizer** (MSA + Egyptian)
+### Arabic Preprocessing Functions
+| Function | Description |
+|----------|-------------|
+| Tashkeel removal | Strip diacritical marks |
+| Tatweel removal | Remove kashida elongation |
+| Letter repetition normalization | `يدرسوووون` → `يدرسون` |
+| Basic & CAMeL normalization | Standardize character variants |
+| Stopword removal | Custom + dialectal stopword lists |
+| ISRI & Tashaphyne stemmers | Lightweight Arabic stemmers |
+| Qalsadi lemmatizer | Rule-based Arabic lemmatizer |
+| CAMeL morphological lemmatizer | MSA + Egyptian dialect support |
 
-### 🎨 Modern UI
-- Dark / Light mode
-- RTL support for Arabic
-- Real-time language detection
-- Step-by-step history viewer
-- Copy & download output
-- Responsive design
+### UI Highlights
+- Dark / Light mode toggle
+- RTL layout support for Arabic text
+- Real-time language detection feedback
+- Step-by-step processing history viewer
+- One-click copy and download of output
+- Fully responsive design
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
-\`\`\`
-
+```
 nlp-preprocessing-app/
-├── backend/              # Flask REST API
-│   ├── api/              # Routes + detectors
-│   ├── pipelines/        # Pipeline classes
-│   ├── preprocessors/    # Modular preprocessors
-│   ├── models/           # Custom resources
-│   ├── utils/            # Logger, validators
-│   ├── logs/             # Rotating logs
-│   └── tests/            # Pytest tests
+├── backend/                  # Flask REST API
+│   ├── api/                  # Routes and language detectors
+│   ├── pipelines/            # Pipeline orchestration classes
+│   ├── preprocessors/        # Modular, single-responsibility preprocessors
+│   ├── models/               # Custom NLP resources
+│   ├── utils/                # Logger, input validators
+│   ├── logs/                 # Rotating log files
+│   └── tests/                # Pytest test suite
 │
-├── frontend/             # React app
-│   ├── src/
-│   │   ├── components/   # UI components
-│   │   ├── hooks/        # Custom hooks
-│   │   ├── context/      # Theme context
-│   │   ├── services/     # API client
-│   │   ├── styles/       # CSS
-│   │   └── utils/        # Constants
+├── frontend/                 # React application
+│   └── src/
+│       ├── components/       # Reusable UI components
+│       ├── hooks/            # Custom React hooks
+│       ├── context/          # Theme context provider
+│       ├── services/         # Axios API client
+│       ├── styles/           # Global CSS with variables
+│       └── utils/            # Constants and helpers
 │
-├── notebooks/            # Jupyter test notebooks
-├── docker-compose.yml    # Multi-container setup
-└── README.md             # You are here
-\`\`\`
+├── notebooks/                # Jupyter notebooks for pipeline testing
+├── docker-compose.yml        # Multi-container orchestration
+└── README.md
+```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: Docker (Recommended)
 
-# Clone the repo
-\`\`\`
+```bash
 git clone https://github.com/abdelrhman-mahmoud/Nlp_preprocessing
-
 cd Nlp_preprocessing
-
-# Build & run everything
-
 docker-compose up --build
-\`\`\`
+```
 
-🎉 Open:
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000/api
+Once running:
+- **Frontend** → http://localhost:3000
+- **Backend API** → http://localhost:5000/api
 
 ### Option 2: Manual Setup
 
-#### Backend
-\`\`\`
+**Backend**
+```bash
 cd backend
 python3.10 -m venv venv
 source venv/bin/activate
@@ -113,34 +125,34 @@ pip install -r requirements.txt
 camel_data -i light
 cp .env.example .env
 python app.py
-\`\`\`
+```
 
-#### Frontend (in a new terminal)
-\`\`\`bash
+**Frontend** *(in a separate terminal)*
+```bash
 cd frontend
 npm install --legacy-peer-deps
 cp .env.example .env
 npm start
-\`\`\`
+```
 
 ---
 
-## 📡 API Overview
+## API Reference
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET`  | `/api/health` | Health check |
-| `POST` | `/api/detect-language` | Detect en/ar |
+| `GET` | `/api/health` | Health check |
+| `POST` | `/api/detect-language` | Detect language (en / ar) |
 | `POST` | `/api/detect-dialect` | Identify Arabic dialect |
-| `GET`  | `/api/functions/<lang>` | List available functions |
-| `POST` | `/api/preprocess` | Run custom pipeline |
-| `POST` | `/api/preprocess/smart` | Auto-detect + default pipeline |
+| `GET` | `/api/functions/<lang>` | List available functions for a language |
+| `POST` | `/api/preprocess` | Run a custom pipeline |
+| `POST` | `/api/preprocess/smart` | Auto-detect language + run default pipeline |
 
 ### Example Request
 
-\`\`\`bash
-curl -X POST http://localhost:5000/api/preprocess \\
-  -H "Content-Type: application/json" \\
+```bash
+curl -X POST http://localhost:5000/api/preprocess \
+  -H "Content-Type: application/json" \
   -d '{
     "text": "يَدْرُسُ الطُلّابُ راااائع 📚",
     "language": "ar",
@@ -153,119 +165,107 @@ curl -X POST http://localhost:5000/api/preprocess \\
     ],
     "auto_order": true
   }'
-\`\`\`
+```
 
-### Response
-\`\`\`json
+### Example Response
+
+```json
 {
   "output": "درس طالب رائع",
   "language": "ar",
-  "applied": ["remove_emoji", "remove_tashkeel", "normalize_repetition", ...],
+  "applied": ["remove_emoji", "remove_tashkeel", "normalize_repetition", "normalize_camel", "lemmatize_msa_camel"],
   "history": [...],
   "dialect": {
     "top_dialect": "MSA",
-    "scores": {"MSA": 0.92, "EGY": 0.04}
+    "scores": { "MSA": 0.92, "EGY": 0.04 }
   }
 }
-\`\`\`
+```
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-### Backend
-- **Flask 3.0** — REST API
-- **NLTK** — English stopwords, stemming, lemmatization
-- **PyArabic** — Arabic char manipulation
-- **Tashaphyne** — Arabic light stemming
-- **Qalsadi** — Arabic lemmatization
-- **CAMeL Tools** — Dialect ID + morphological analysis
-- **langdetect** — Language identification
+**Backend**
+- [Flask 3.0](https://flask.palletsprojects.com) — REST API framework
+- [NLTK](https://www.nltk.org/) — English stopwords, stemming, lemmatization
+- [PyArabic](https://github.com/linuxscout/pyarabic) — Arabic character manipulation
+- [Tashaphyne](https://github.com/linuxscout/tashaphyne) — Arabic light stemmer
+- [Qalsadi](https://github.com/linuxscout/qalsadi) — Arabic lemmatizer
+- [CAMeL Tools](https://github.com/CAMeL-Lab/camel_tools) — Dialect ID + morphological analysis
+- [langdetect](https://github.com/Mimino666/langdetect) — Language identification
 
-### Frontend
-- **React 18** — UI framework
-- **@hello-pangea/dnd** — Drag & drop
-- **lucide-react** — Icons
-- **axios** — API client
-- **CSS variables** — Theming
+**Frontend**
+- [React 18](https://reactjs.org) — UI framework
+- [@hello-pangea/dnd](https://github.com/hello-pangea/dnd) — Drag and drop
+- [lucide-react](https://lucide.dev) — Icon library
+- [axios](https://axios-http.com) — HTTP client
+- CSS variables — Theming system
 
-### DevOps
-- **Docker** + **docker-compose**
-- **Nginx** for serving frontend
+**DevOps**
+- Docker + docker-compose
+- Nginx for static frontend serving
 
 ---
 
-## 🧪 Testing
+## Testing
 
-\`\`\`bash
-# Backend tests
+**Backend**
+```bash
 cd backend
 pytest tests/ -v
+```
 
-# Frontend tests
+**Frontend**
+```bash
 cd frontend
 npm test
-\`\`\`
+```
 
----
-
-## 📓 Jupyter Notebook
-
-Test the pipelines interactively:
-
-\`\`\`bash
+**Notebooks** — Test pipelines interactively:
+```bash
 cd notebooks
 jupyter notebook 01_complete_pipeline_test.ipynb
-\`\`\`
+```
 
 ---
 
-## 🌍 Supported Arabic Dialects
+## Arabic Dialect Support
 
 | Code | Dialect | Region |
 |------|---------|--------|
-| MSA  | Modern Standard Arabic | Pan-Arab |
-| EGY  | Egyptian | Egypt 🇪🇬 |
-| GLF  | Gulf | Saudi, UAE, Kuwait, Qatar 🇸🇦 |
-| LEV  | Levantine | Syria, Lebanon, Jordan, Palestine 🇱🇧 |
-| NOR  | Maghrebi | Morocco, Algeria, Tunisia 🇲🇦 |
+| MSA | Modern Standard Arabic | Pan-Arab |
+| EGY | Egyptian | Egypt |
+| GLF | Gulf | Saudi Arabia, UAE, Kuwait, Qatar |
+| LEV | Levantine | Syria, Lebanon, Jordan, Palestine |
+| NOR | Maghrebi | Morocco, Algeria, Tunisia |
 
 ---
 
-## 📷 Screenshots
+## Contributing
 
-> _Add screenshots of the UI here_
-
----
-
-## 🤝 Contributing
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/amazing`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing`)
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
 5. Open a Pull Request
 
 ---
 
-## 📄 License
+## License
 
-MIT License — see [LICENSE](LICENSE) file.
-
----
-
-## 🙏 Acknowledgments
-
-- [CAMeL Tools](https://github.com/CAMeL-Lab/camel_tools) for Arabic NLP
-- [NLTK](https://www.nltk.org/) for English NLP
-- [PyArabic](https://github.com/linuxscout/pyarabic) for Arabic utilities
-- [Tashaphyne](https://github.com/linuxscout/tashaphyne) for Arabic stemming
-- [Qalsadi](https://github.com/linuxscout/qalsadi) for Arabic lemmatization
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📧 Contact
+## Acknowledgments
 
-Built with ❤️ by **Abdelrhman**
+- [CAMeL Tools](https://github.com/CAMeL-Lab/camel_tools) — Arabic NLP toolkit
+- [NLTK](https://www.nltk.org/) — English NLP foundation
+- [PyArabic](https://github.com/linuxscout/pyarabic) — Arabic text utilities
+- [Tashaphyne](https://github.com/linuxscout/tashaphyne) — Arabic stemming
+- [Qalsadi](https://github.com/linuxscout/qalsadi) — Arabic lemmatization
 
-For questions or suggestions, open an issue or reach out!
+---
+
+Built with ❤️ by **Abdelrhman** — for questions or suggestions, open an issue or submit a PR.
