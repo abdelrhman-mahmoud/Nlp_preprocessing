@@ -88,7 +88,7 @@ nlp-preprocessing-app/
 ### Option 1: Docker (Recommended)
 
 # Clone the repo
-\`\`\`bash
+\`\`\`
 git clone https://github.com/abdelrhman-mahmoud/Nlp_preprocessing
 
 cd Nlp_preprocessing
@@ -105,7 +105,7 @@ docker-compose up --build
 ### Option 2: Manual Setup
 
 #### Backend
-\`\`\`bash
+\`\`\`
 cd backend
 python3.10 -m venv venv
 source venv/bin/activate
