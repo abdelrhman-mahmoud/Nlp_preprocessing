@@ -1,4 +1,5 @@
-FROM python:3.10-slim
+# Full image already ships with gcc / build-essential — no apt-get needed
+FROM python:3.12-slim
 
 # ==== Environment ====
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -7,12 +8,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
-
-# ==== System dependencies ====
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
 
 # ==== Python dependencies ====
 COPY requirements.txt .
@@ -34,14 +29,12 @@ RUN python -c "import nltk; \
 # ==== Application code ====
 COPY . .
 
-# ==== Create logs & models directories ====
 RUN mkdir -p logs models/english models/arabic
 
-# ==== Expose & run ====
 EXPOSE 5000
 
-# Health check
+# Pure-Python healthcheck — no curl required
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:5000/api/health || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')" || exit 1
 
 CMD ["python", "app.py"]
